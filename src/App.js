@@ -40,11 +40,11 @@ class Book extends Component {
 //-----------------------------------------------------------------------------
 class Form extends Component {
 
-  state = { title: '', author: '' };
+  state = { title: '', author: '' }; // state initialize to empty strings
 
   handleSubmit = (event) => {
     event.preventDefault(); // Prevent the normal HTML submit from taking place
-    let title = this.state.title;
+    let title = this.state.title;  // let creates block scope local variable
     let author = this.state.author;
     console.log('Title: ' + title + ' Author: ' + author);
 
