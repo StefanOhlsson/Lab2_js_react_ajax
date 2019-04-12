@@ -1,6 +1,6 @@
 {
-  "name": "js-react-ajax-lab2",
-  "homepage": "https://stefanohlsson.github.io/js-react-ajax-lab2",
+  "name": "lab2_js_react_ajax",
+  "homepage": "https://stefanohlsson.github.io/lab2_js_react_ajax",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
