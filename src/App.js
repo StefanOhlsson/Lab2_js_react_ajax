@@ -22,8 +22,8 @@ const InfoUpdate = (props) => (
 
 //-----------------------------------------------------------------------------
 class App extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       books: [], // The list of books. Will be populated via the Rest API.
       editing: false, // Is book editing mode enabled?
