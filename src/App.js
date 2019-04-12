@@ -37,7 +37,6 @@ class App extends Component {
    * @param {string} author The author of the book to add.
    */
   addBookToList = (id, title, author) => {
-    console.log('App: New book added');
     this.setState(prevState => ({
       books: [...prevState.books, { id, title, author }] // Append new book
     }))
@@ -52,12 +51,11 @@ class App extends Component {
   updateBookInList = (id, title, author) => {
     this.setState(prevState => {
       let bookListCopy = [...prevState.books];
-      bookListCopy.forEach(el => {
-        if (el.id === id) {
-          el.title = title;
-          el.author = author;
-        }
-      });
+      let idx = bookListCopy.findIndex(el => el.id === id);
+      if (idx >= 0) {
+        bookListCopy[idx].title = title;
+        bookListCopy[idx].author = author;
+      }
       return { books: bookListCopy }
     })
   };
@@ -79,7 +77,6 @@ class App extends Component {
   removeBook = (bookId) => {
     apiModule.removeBook(bookId).then(resp => {
       if (resp.status === 'success') {
-        console.log('Remove book success!');
         this.removeBookFromList(bookId);
         this.setInfoMessage('Boken har tagits bort! Det krävdes ' + resp.tryCount + ' försök.');
       } else {
@@ -93,11 +90,8 @@ class App extends Component {
    */
   fetchBooks() {
     apiModule.fetchBooks().then(resp => {
-      console.log('Response: ', resp);
-      console.log('ID: ', resp.id);
-      console.log('Data: ', resp.data);
+      console.log('fetchBooks() response: ', resp);
       if (resp.status === 'success') {
-        console.log('fetchBooks() success!');
         this.setState(() => ({
           books: resp.data
         }))
