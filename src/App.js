@@ -22,44 +22,45 @@ const InfoUpdate = (props) => (
 
 //-----------------------------------------------------------------------------
 class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      books: [], // The list of books. Will be populated via the Rest API.
+      editing: false, // Is book editing mode enabled?
+      bookToEdit: {}, // Holds book to edit (if editing mode enabled).
+      infoMessage: 'Välkommen till bokdatabasen!', // Message to display in page info box
+    }
 
-  state = {
-    books: [], // The list of books. Will be populated via the Rest API.
-    editing: false, // Is book editing mode enabled?
-    bookToEdit: {}, // Holds book to edit (if editing mode enabled).
-    infoMessage: 'Välkommen till bokdatabasen!', // Message to display in page info box
-  };
+    /**
+     * Add new book to the visible list without having to fetch the whole list again.
+     * @param {number} id The ID of the book to add.
+     * @param {string} title The title of the book to add.
+     * @param {string} author The author of the book to add.
+     */
+    this.addBookToList = (id, title, author) => {
+      this.setState(prevState => ({
+        books: [...prevState.books, { id, title, author }] // Append new book
+      }))
+    };
 
-  /**
-   * Add new book to the visible list without having to fetch the whole list again.
-   * @param {number} id The ID of the book to add.
-   * @param {string} title The title of the book to add.
-   * @param {string} author The author of the book to add.
-   */
-  addBookToList = (id, title, author) => {
-    this.setState(prevState => ({
-      books: [...prevState.books, { id, title, author }] // Append new book
-    }))
-  };
-
-  /**
-   * Update a book in the visible list without having to fetch the whole list again.
-   * @param {number} id The ID of the book to update.
-   * @param {string} title The (new) title of the book to update.
-   * @param {string} author The (new) author of the book to update.
-   */
-  updateBookInList = (id, title, author) => {
-    this.setState(prevState => {
-      let bookListCopy = [...prevState.books];
-      let idx = bookListCopy.findIndex(el => el.id === id);
-      if (idx >= 0) {
-        bookListCopy[idx].title = title;
-        bookListCopy[idx].author = author;
-      }
-      return { books: bookListCopy }
-    })
-  };
-
+    /**
+     * Update a book in the visible list without having to fetch the whole list again.
+     * @param {number} id The ID of the book to update.
+     * @param {string} title The (new) title of the book to update.
+     * @param {string} author The (new) author of the book to update.
+     */
+    this.updateBookInList = (id, title, author) => {
+      this.setState(prevState => {
+        let bookListCopy = [...prevState.books];
+        let idx = bookListCopy.findIndex(el => el.id === id);
+        if (idx >= 0) {
+          bookListCopy[idx].title = title;
+          bookListCopy[idx].author = author;
+        }
+        return { books: bookListCopy }
+      })
+    };
+  }
   /**
    * Remove a book from the visible list without having to fetch the whole list again.
    * @param {number} id The ID of the book to remove.
